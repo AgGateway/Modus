@@ -22,5 +22,5 @@ Recognizing these challenges and their importance for the success of Digital Agr
 ## More info and method change/addition requests
 Find more info at ModusStandard.org
 
-If you need to change or request a new test method please [complete this form](https://aggateway.atlassian.net/l/cp/pb0wd1Ye) on the [ModusStandard.org](modusstandard.org) website.
+If you need to change or request a new test method please [complete this form](https://aggateway.atlassian.net/l/cp/pb0wd1Ye) on the [ModusStandard.org](http://modusstandard.org) website.
 
