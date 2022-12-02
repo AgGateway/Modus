@@ -13,12 +13,11 @@ Current trends in sustainability, traceability, and compliance reporting demand 
 
 •	Automated data management, from work order generation, sample collection, drying analysis and result distribution, will improve labs’ efficiency and allow them to increase their sample throughput. In this competitive environment, the laboratories that can offer the best turnaround without compromising the quality of analysis will gain significant market share and be more profitable.
 
-•	Farm Management Information Systems are a big piece of this puzzle. Enabling grower-, advisor- and retailer-facing farm management software to produce work orders and consume test results will enable automation.
+•	Farm Management Information Systems are a big piece of this puzzle. Enabling grower-, advisor- and retailer-facing farm management software to produce work orders and consume test results will require automation.
 
 ## AgGateway has a solution for how to make this work!
 
-Recognizing these challenges and their importance for the success of Digital Agriculture, AgGateway created the Laboratory Data Standardization Working Group. This group’s goal is to partner with the laboratory community and help implement standards and formats that can interoperate with AgGateway’s ADAPT (www.adaptframework.org), along with ISO 11783 files and other existing farm management data standards. 
-This work will initially focus on the MODUS format that many labs are already using. The first deliverable will be an ADAPT plug-in (on the premise that ADAPT is a recognized and adopted tool within the digital agriculture space, across regions and platforms) accompanied by implementation guidelines.
+Recognizing these challenges and their importance for the success of Digital Agriculture, AgGateway created the Laboratory Data Standardization Working Group. This group’s goal is to partner with the laboratory community and help implement standards and formats that will initially focus on the MODUS format that many labs are already using. The first deliverable will be an update to the existing Modus schema creating more consitiency and better information for each test method included in the standard. Addtionally, AgGateway will proivde more transparent governance and licesning enabling broader use of the standard and improved ability to adapt to changes and the needs of the industry. 
 
 ![image](https://user-images.githubusercontent.com/69859591/189997456-8f4118bb-baa4-4637-b771-2ad9337eb2ae.png)
 
