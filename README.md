@@ -19,9 +19,6 @@ Current trends in sustainability, traceability, and compliance reporting demand 
 
 Recognizing these challenges and their importance for the success of Digital Agriculture, AgGateway created the Laboratory Data Standardization Working Group. This group’s goal is to partner with the laboratory community and help implement standards and formats that will initially focus on the MODUS format that many labs are already using. The first deliverable will be an update to the existing Modus schema creating more consitiency and better information for each test method included in the standard. Addtionally, AgGateway will proivde more transparent governance and licesning enabling broader use of the standard and improved ability to adapt to changes and the needs of the industry. 
 
-![image](https://user-images.githubusercontent.com/69859591/189997456-8f4118bb-baa4-4637-b771-2ad9337eb2ae.png)
-
-
 ## Together, let’s take MODUS to a new level!
 •	MODUS emerged from the collaboration among a group of companies, academics, and soil test laboratories.
 
