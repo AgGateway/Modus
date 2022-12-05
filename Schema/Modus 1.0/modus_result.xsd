@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 rel. 2 sp2 (x64) (http://www.altova.com) by Aaron Hunt (private) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="modus_global.xsd"/>
+	<xs:include schemaLocation="modus_submit.xsd"/>
+	<xs:element name="ModusResult">
+		<xs:annotation>
+			<xs:documentation>Modus document for submission of lab results to FMIS</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Event" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="EventMetaData">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="EventCode" nillable="true">
+											<xs:annotation>
+												<xs:documentation>Unique human readable code for the sample event. Often referred to a Layer ID</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:minLength value="0"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="EventDate" type="xs:date" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Date the sample event was collected in the field</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element ref="EventType"/>
+										<xs:element name="EventExpirationDate" type="xs:date" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>The date the data in the even is to expire for use in a recommendation</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+							<xs:element ref="LabMetaData"/>
+							<xs:element ref="FMISMetaData" minOccurs="0"/>
+							<xs:element name="EventSamples">
+								<xs:annotation>
+									<xs:documentation>Element contains the field sample points and data</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:choice>
+										<xs:element name="Soil">
+											<xs:annotation>
+												<xs:documentation>Element to place samples and results from a soil sample event</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element ref="DepthRefs"/>
+													<xs:element ref="RecommendationRefs" minOccurs="0"/>
+													<xs:element name="SoilSample" maxOccurs="unbounded">
+														<xs:annotation>
+															<xs:documentation>Element that contains the soil sampl eevent data under the soil event</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:all>
+																<xs:element ref="SampleMetaData"/>
+																<xs:element name="Depths">
+																	<xs:annotation>
+																		<xs:documentation>A container for the different depths being reported</xs:documentation>
+																	</xs:annotation>
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="Depth" maxOccurs="unbounded">
+																				<xs:annotation>
+																					<xs:documentation>Container for results at a defined depth. The Depth ID is defined in DetphRefs</xs:documentation>
+																				</xs:annotation>
+																				<xs:complexType>
+																					<xs:all>
+																						<xs:element ref="NutrientResults" minOccurs="0"/>
+																						<xs:element ref="TextureResults" minOccurs="0"/>
+																					</xs:all>
+																					<xs:attribute name="DepthID" type="xs:positiveInteger" use="required">
+																						<xs:annotation>
+																							<xs:documentation>Depth ID from the Depth Reference</xs:documentation>
+																						</xs:annotation>
+																					</xs:attribute>
+																				</xs:complexType>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+																<xs:element ref="NutrientRecommendations" minOccurs="0"/>
+																<xs:element ref="Comments" minOccurs="0"/>
+															</xs:all>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Plant">
+											<xs:annotation>
+												<xs:documentation>Element to place samples and results from a plant tissue sample event</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element ref="RecommendationRefs" minOccurs="0"/>
+													<xs:element name="PlantSample" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:all>
+																<xs:element ref="SampleMetaData"/>
+																<xs:element ref="NutrientResults" minOccurs="0"/>
+																<xs:element ref="NutrientRecommendations" minOccurs="0"/>
+																<xs:element ref="Comments" minOccurs="0"/>
+															</xs:all>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Nematode">
+											<xs:annotation>
+												<xs:documentation>Element to place samples and results from a nematode sample event</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element ref="DepthRefs"/>
+													<xs:element name="NematodeSample" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:all>
+																<xs:element ref="SampleMetaData"/>
+																<xs:element name="Depths">
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="Depth">
+																				<xs:complexType>
+																					<xs:all>
+																						<xs:element ref="NematodeResults" minOccurs="0"/>
+																					</xs:all>
+																					<xs:attribute name="DepthID" type="xs:positiveInteger"/>
+																				</xs:complexType>
+																			</xs:element>
+																		</xs:sequence>
+																	</xs:complexType>
+																</xs:element>
+																<xs:element ref="Comments" minOccurs="0"/>
+															</xs:all>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Water" minOccurs="0" maxOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="WaterSample" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:all>
+																<xs:element ref="SampleMetaData"/>
+																<xs:element name="Source" type="xs:string" minOccurs="0"/>
+																<xs:element ref="NutrientResults" minOccurs="0"/>
+																<xs:element ref="Comments" minOccurs="0"/>
+															</xs:all>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Residue" minOccurs="0" maxOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="ResidueSample" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:all>
+																<xs:element ref="SampleMetaData"/>
+																<xs:element ref="ResidueResults" minOccurs="0"/>
+																<xs:element ref="Comments" minOccurs="0"/>
+															</xs:all>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:choice>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Comments" type="xs:string" minOccurs="0"/>
+							<xs:element ref="ModusSubmit" minOccurs="0"/>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="Version" type="xs:string" default="1.0"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
