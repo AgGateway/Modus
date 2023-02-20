@@ -16,8 +16,7 @@ Current trends in sustainability, traceability, and compliance reporting demand 
 •	Farm Management Information Systems are a big piece of this puzzle. Enabling grower-, advisor- and retailer-facing farm management software to produce work orders and consume test results will require automation.
 
 ## AgGateway has a solution for how to make this work!
-
-Recognizing these challenges and their importance for the success of Digital Agriculture, AgGateway created the Laboratory Data Standardization Working Group. This group’s goal is to partner with the laboratory community and help implement standards and formats that will initially focus on the MODUS format that many labs are already using. The first deliverable will be an update to the existing Modus schema creating more consitiency and better information for each test method included in the standard. Addtionally, AgGateway will proivde more transparent governance and licesning enabling broader use of the standard and improved ability to adapt to changes and the needs of the industry. 
+Recognizing these challenges and their importance for the success of Digital Agriculture, AgGateway created the Laboratory Data Standardization Working Group. This group’s goal is to partner with the laboratory community and help implement standards and formats that will initially focus on the Modus format that many labs are already using. The first deliverable will be an update to the existing Modus schema creating more consistency and better information for each test method included in the standard. Additionally, AgGateway will provide more transparent governance and licensing enabling broader use of the standard and improved ability to adapt to changes and the needs of the industry.
 
 ## More info and method change/addition requests
 Find more info at [ModusStandard.org](http://modusstandard.org) including the process outlining the procedure for a change or new test method is reviewed and approved. 
