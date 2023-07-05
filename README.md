@@ -1,9 +1,5 @@
 # Agricultural Lab Test Data Exchange
 
-<img src="https://your-image-url.type](https://github.com/AgGateway/Modus/blob/main/images/modus_Image.png)" title="Modus logo" width="200">
-
-<!-- ![Modus logo](https://github.com/AgGateway/Modus/blob/main/images/modus_Image.png "Modus logo") -->
-
 ## Exchanging soil test data is important, but difficult
 
 Current trends in sustainability, traceability, and compliance reporting demand that growers report ever-increasing amounts of data to justify their operations. Soil test data is the most commonly used data layer in digital agriculture and drives much agricultural decision-making. Soil test data reporting in commercial and regulatory settings will likely become an industry norm.
