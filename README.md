@@ -1,6 +1,8 @@
 # Agricultural Lab Test Data Exchange
 
-![Modus logo](https://github.com/AgGateway/Modus/blob/main/images/modus_Image.png "Modus logo")
+<img src="[https://your-image-url.type](https://github.com/AgGateway/Modus/blob/main/images/modus_Image.png)" title="Modus logo" width="200">
+
+<!-- ![Modus logo](https://github.com/AgGateway/Modus/blob/main/images/modus_Image.png "Modus logo") -->
 
 ## Exchanging soil test data is important, but difficult
 
