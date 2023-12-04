@@ -1,0 +1,1095 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2013 rel. 2 sp2 (x64) (http://www.altova.com) by Aaron Hunt (private) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="FMISMetaData">
+		<xs:annotation>
+			<xs:documentation>Element that contains data needed for FMIS "Field Management Information Systems" </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="FMISEventID" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Unique code for the sample event. Often an internal UUID from an FMIS</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="FMISProfile" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Grower/Farm/Field Name and ID's for FMIS</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="FMISAllowedLabEquations" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Lab defined equations that are allowed by the lab to be used in the FMIS</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="Equation" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+					<xs:unique name="uniqueEquationId">
+						<xs:selector xpath="Equation"/>
+						<xs:field xpath="@ID"/>
+					</xs:unique>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="LabMetaData">
+		<xs:annotation>
+			<xs:documentation>Metadata related to the testing lab</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="LabName" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>THe name of the lab that ran the results</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="LabID" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>ID for the lab that ran the results</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="LabEventID" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Internal Lab ID for the event</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Contact" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Contant information at the lab</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="Name" type="xs:string"/>
+							<xs:element name="PhoneNumber" type="xs:string"/>
+							<xs:element name="Address" type="xs:string"/>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="TestPackageRefs" minOccurs="0"/>
+				<xs:element name="ReceivedDate" type="xs:dateTime" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The date/time the sample where received at the lab</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ProcessedDate" type="xs:dateTime" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The date/time the sample was processed by the lab</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Reports" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>List of lab reports </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Report" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="LabReportID" type="xs:string" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>ID the lab has assigned to the report</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="FileDescription" type="xs:string" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Description of the report file</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="File">
+											<xs:annotation>
+												<xs:documentation>The file data for the report. The lab has the choice to pass a URL or embed the file data.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:choice>
+													<xs:element name="URL" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>The url path to the report file</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="FileName" type="xs:string">
+																	<xs:annotation>
+																		<xs:documentation>The name for the file</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="Path" type="xs:string">
+																	<xs:annotation>
+																		<xs:documentation>The path to the file</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="FileData" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>The file data</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="FileName" type="xs:string">
+																	<xs:annotation>
+																		<xs:documentation>The name for the file</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+																<xs:element name="FileData" type="xs:base64Binary">
+																	<xs:annotation>
+																		<xs:documentation>File data base64 encoded</xs:documentation>
+																	</xs:annotation>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:choice>
+											</xs:complexType>
+										</xs:element>
+									</xs:all>
+									<xs:attribute name="ReportID" type="xs:positiveInteger"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+					<xs:unique name="uniqueReportID">
+						<xs:selector xpath="Report"/>
+						<xs:field xpath="@ReportID"/>
+					</xs:unique>
+				</xs:element>
+				<xs:element name="ClientAccount" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>End user lab account information</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="AccountNumber" type="xs:string"/>
+							<xs:element name="Name" type="xs:string" minOccurs="0"/>
+							<xs:element name="Company" type="xs:string" minOccurs="0"/>
+							<xs:element name="City" type="xs:string" minOccurs="0"/>
+							<xs:element name="State" type="xs:string" minOccurs="0"/>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="uuid">
+		<xs:restriction base="xs:string">
+			<xs:length value="36"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="TestPackageRefs">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="TestPackageRef" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="Name" type="xs:string"/>
+							<xs:element name="LabBillingCode" type="xs:string" minOccurs="0"/>
+						</xs:all>
+						<xs:attribute name="TestPackageID" type="xs:int"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+		<xs:unique name="UniquePackageID">
+			<xs:selector xpath="TestPackageRef"/>
+			<xs:field xpath="@TestPackageID"/>
+		</xs:unique>
+	</xs:element>
+	<xs:element name="Warnings">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="warning" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="warning_number" type="xs:int" minOccurs="0"/>
+							<xs:element name="message" minOccurs="0"/>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NutrientResults">
+		<xs:annotation>
+			<xs:documentation>Nutrient results of a sample</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="NutrientResult" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Result for a single element</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="Element">
+								<xs:annotation>
+									<xs:documentation>Nutirent Element. See "Element List for Modus.xlsx" for supported elements </xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:minLength value="1"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="Value">
+								<xs:annotation>
+									<xs:documentation>The value of the element</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:float">
+										<xs:minInclusive value="0"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="ValueUnit">
+								<xs:annotation>
+									<xs:documentation>Unit of measure for the value</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:minLength value="1"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="ModusTestID">
+								<xs:annotation>
+									<xs:documentation>Analysis Name from "Soil Analysis Nomenclature Modus.xlsx" or "Botanical Analysis Nomenclature Modus.xlsx"</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:minLength value="1"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="ValueType">
+								<xs:annotation>
+									<xs:documentation>Type definition of the value</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:minLength value="1"/>
+										<xs:enumeration value="Measured"/>
+										<xs:enumeration value="Percent"/>
+										<xs:enumeration value="Calculated"/>
+										<xs:enumeration value="Index"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="ValueDesc" nillable="true">
+								<xs:annotation>
+									<xs:documentation>Value discription assigned by the lab.</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:enumeration value="Very Low"/>
+										<xs:enumeration value="Low"/>
+										<xs:enumeration value="Medium"/>
+										<xs:enumeration value="Optimum"/>
+										<xs:enumeration value="Very High"/>
+										<xs:enumeration value="VL"/>
+										<xs:enumeration value="L"/>
+										<xs:enumeration value="M"/>
+										<xs:enumeration value="O"/>
+										<xs:enumeration value="VH"/>
+										<xs:enumeration value="High"/>
+										<xs:enumeration value="H"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NutrientRecommendations">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="NutrientRecommendation" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Recommendation" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="Element">
+											<xs:annotation>
+												<xs:documentation>Name of the recommendation element</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:minLength value="1"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="Value">
+											<xs:annotation>
+												<xs:documentation>Value of the recommendation</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:float">
+													<xs:minInclusive value="0"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="ValueUnit">
+											<xs:annotation>
+												<xs:documentation>Unit of the recommendation</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:minLength value="1"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="RecID" type="xs:positiveInteger" use="required">
+							<xs:annotation>
+								<xs:documentation>Rec ID from the Recommendation Reference</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+					<xs:unique name="UniqueNutrientRecommendationElement">
+						<xs:selector xpath="Recommendation"/>
+						<xs:field xpath="Element"/>
+					</xs:unique>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NematodeResults">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="NematodeResult" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="Pest" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Name of the pest being reported</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="ModusTestID" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>ModusTestID found in "Nematode Analysis Nomenclature.xlsx" </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Value">
+								<xs:annotation>
+									<xs:documentation>Value/count of the pest</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:float">
+										<xs:minInclusive value="0"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="ValueUnit">
+								<xs:annotation>
+									<xs:documentation>Unit of the pest value/count</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:minLength value="1"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="ValueType">
+								<xs:annotation>
+									<xs:documentation>Measured, Percent, Calculated, Index</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:minLength value="1"/>
+										<xs:enumeration value="Measured"/>
+										<xs:enumeration value="Percent"/>
+										<xs:enumeration value="Calculated"/>
+										<xs:enumeration value="Index"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="ValueDesc" nillable="true">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:enumeration value="Very Low"/>
+										<xs:enumeration value="Low"/>
+										<xs:enumeration value="Medium"/>
+										<xs:enumeration value="Optimum"/>
+										<xs:enumeration value="Very High"/>
+										<xs:enumeration value="VL"/>
+										<xs:enumeration value="L"/>
+										<xs:enumeration value="M"/>
+										<xs:enumeration value="O"/>
+										<xs:enumeration value="VH"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="LifeStageValues" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Place to report the counts of the different life stages</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="LifeStageValue" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:all>
+													<xs:element name="LifeStage">
+														<xs:annotation>
+															<xs:documentation>Life stage</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:enumeration value="Egg"/>
+																<xs:enumeration value="Juvenile"/>
+																<xs:enumeration value="Adult"/>
+																<xs:enumeration value="Dead"/>
+																<xs:enumeration value=""/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="Value">
+														<xs:annotation>
+															<xs:documentation>Value/Count of the pest lifestage</xs:documentation>
+														</xs:annotation>
+													</xs:element>
+													<xs:element name="ValueUnit">
+														<xs:annotation>
+															<xs:documentation>Unit of the value/count</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="1"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="ValueType">
+														<xs:annotation>
+															<xs:documentation>Measured, Percent, Calculated, Index</xs:documentation>
+														</xs:annotation>
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:minLength value="1"/>
+																<xs:enumeration value="Measured"/>
+																<xs:enumeration value="Percent"/>
+																<xs:enumeration value="Calculated"/>
+																<xs:enumeration value="Index"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="ValueDesc">
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:enumeration value="Very Low"/>
+																<xs:enumeration value="Low"/>
+																<xs:enumeration value="Medium"/>
+																<xs:enumeration value="Optimum"/>
+																<xs:enumeration value="Very High"/>
+																<xs:enumeration value="VL"/>
+																<xs:enumeration value="L"/>
+																<xs:enumeration value="M"/>
+																<xs:enumeration value="O"/>
+																<xs:enumeration value="VH"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+												</xs:all>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+								<xs:unique name="NematodeLifeStage">
+									<xs:selector xpath="LifeStageValue"/>
+									<xs:field xpath="LifeStage"/>
+								</xs:unique>
+							</xs:element>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+		<xs:unique name="UniqueNematodePest">
+			<xs:selector xpath="NematodeResult"/>
+			<xs:field xpath="ModusTestID"/>
+		</xs:unique>
+	</xs:element>
+	<xs:element name="ResidueResults">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ResidueResult" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="CASRN">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:minLength value="1"/>
+										<xs:maxLength value="50"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="Value">
+								<xs:simpleType>
+									<xs:restriction base="xs:float">
+										<xs:minInclusive value="0"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="ValueUnit">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:minLength value="1"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="ValueType">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:minLength value="1"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="ValueDesc" type="xs:string"/>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Comments" type="xs:string"/>
+	<xs:element name="TextureResults">
+		<xs:annotation>
+			<xs:documentation>Texture results for a sample</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="TextureResult">
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="SoilClassification" type="xs:string"/>
+							<xs:element name="PercentClay" type="xs:float"/>
+							<xs:element name="PercentSilt" type="xs:float"/>
+							<xs:element name="PercentSand" type="xs:float"/>
+							<xs:element name="Density" minOccurs="0">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="Value" type="xs:float"/>
+										<xs:element name="Unit">
+											<xs:simpleType>
+												<xs:restriction base="xs:string"/>
+											</xs:simpleType>
+										</xs:element>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SensorResults">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SensorResult" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="ValueDesc" type="xs:string"/>
+							<xs:element name="ValueUnit">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:minLength value="1"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="Value">
+								<xs:simpleType>
+									<xs:restriction base="xs:float">
+										<xs:minInclusive value="0"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="EventType">
+		<xs:annotation>
+			<xs:documentation>EventType is used to define the sample tyoe of the event. For Plant tissue, you also can define the growth stages and sub-growth stages</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="Soil"/>
+				<xs:element name="Plant">
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="PlantPart"/>
+							<xs:element ref="Crop"/>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Nematode"/>
+				<xs:element name="Water" minOccurs="0" maxOccurs="0"/>
+				<xs:element name="Residue" minOccurs="0" maxOccurs="0"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SampleMetaData">
+		<xs:annotation>
+			<xs:documentation>Metadata for a sample in the sample event</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="SampleNumber" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Sample Number give the sample by during sample collection</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="FMISSampleID" type="xs:string" nillable="true" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Unique ID asigned by an FMIS for the sample</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SampleContainerID" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Unique ID for the sample bag or container. i.e. Bar code</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SampleGroupID" type="xs:positiveInteger" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>ID number to reference different samples as one group</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ReportID" type="xs:positiveInteger" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>ID number to relate which lab report contains the sample</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="OverwriteResult" type="xs:boolean" default="false" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>
+							Flag to indicate if this result is to overwrite any previous results. e.g. for correcting a mistake.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Geometry" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>WKT Geometry
+Source: http://en.wikipedia.org/wiki/Well-known_text
+Limit types to Point, Polygon and MultiPolygon</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="epsg" type="xs:int" default="4326">
+									<xs:annotation>
+										<xs:documentation>Projection ID of the Geometry
+Source: http://spatialreference.org/ref/?page=1
+Default is WGS84 - Lat,Lon    epsg: 4326</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="SubSamples" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Sub Samples is where the location of the cores within a sample can be recored</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="SubSample" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>One sub sample / core</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="SubSampleNumber" type="xs:nonNegativeInteger">
+											<xs:annotation>
+												<xs:documentation>ID number assigned during collection.</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="SubSampleID" type="xs:string" nillable="true" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Unique ID for the sub-sample asigned by an FMIS</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Geometry" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>WKT Geometry
+Source: http://en.wikipedia.org/wiki/Well-known_text
+Limit types to Point, Polygon and MultiPolygon</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:simpleContent>
+													<xs:extension base="xs:string">
+														<xs:attribute name="epsg" type="xs:int" default="4326">
+															<xs:annotation>
+																<xs:documentation>Projection ID of the Geometry
+Source: http://spatialreference.org/ref/?page=1
+Default is WGS84 - Lat,Lon    epsg: 4326</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+													</xs:extension>
+												</xs:simpleContent>
+											</xs:complexType>
+										</xs:element>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="TestPackages" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The lab test pagakes used for the sample.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="TestPackage" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="TestPackageID"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+					<xs:unique name="SampleTestPackage">
+						<xs:selector xpath="TestPackage"/>
+						<xs:field xpath="@TestPackageID"/>
+					</xs:unique>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DepthRefs">
+		<xs:annotation>
+			<xs:documentation>Place to define a reference list for the depths used in the sample event </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="DepthRef" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>A single depth</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="Name">
+								<xs:annotation>
+									<xs:documentation>Name given to the depth to be used for display by FMIS systems. ex Depth 1, 6"</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:minLength value="1"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="StartingDepth" type="xs:nonNegativeInteger" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Depth at the sart of the column depth in the DepthUnit</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="EndingDepth" type="xs:nonNegativeInteger" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Depth at the end of the column depth in the DepthUnit</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="ColumnDepth" type="xs:positiveInteger" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Total column depth (End - Start) in the DepthUnit</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="DepthUnit" type="xs:string" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Unit the depth is reported in.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:all>
+						<xs:attribute name="DepthID" type="xs:positiveInteger" use="required">
+							<xs:annotation>
+								<xs:documentation>Unique Sequential ID</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+		<xs:unique name="uniqueDepthId">
+			<xs:selector xpath="DepthRef"/>
+			<xs:field xpath="@DepthID"/>
+		</xs:unique>
+	</xs:element>
+	<xs:element name="RecommendationRefs">
+		<xs:annotation>
+			<xs:documentation>Reference documntation to a lab recommendation</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Recommendation" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+		<xs:unique name="uniqueRecID">
+			<xs:selector xpath="Recommendation"/>
+			<xs:field xpath="@RecID"/>
+		</xs:unique>
+		<xs:unique name="uniqueDisplayOrder">
+			<xs:selector xpath="Recommendation"/>
+			<xs:field xpath="DisplayOrder"/>
+		</xs:unique>
+	</xs:element>
+	<xs:element name="RecommendationRequests">
+		<xs:annotation>
+			<xs:documentation>Reference documntation to a lab recommendation</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Recommendation" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+		<xs:unique name="uniqueRecommendationID">
+			<xs:selector xpath="Recommendation"/>
+			<xs:field xpath="@RecID"/>
+		</xs:unique>
+	</xs:element>
+	<xs:element name="Crop">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="Name" type="xs:string"/>
+				<xs:element name="ClientID" type="xs:string" minOccurs="0"/>
+				<xs:element name="GrowthStage" minOccurs="0">
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="Name" type="xs:string"/>
+							<xs:element name="ClientID" type="xs:string" minOccurs="0"/>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="SubGrowthStage" minOccurs="0">
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="Name" type="xs:string"/>
+							<xs:element name="ClientID" type="xs:string" minOccurs="0"/>
+						</xs:all>
+					</xs:complexType>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SiteAttributes">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="Tillage" type="xs:string" minOccurs="0"/>
+				<xs:element name="Irrigated" type="xs:boolean" minOccurs="0"/>
+				<xs:element name="Tilled" type="xs:boolean" minOccurs="0"/>
+				<xs:element name="PrevCrop" type="xs:string" minOccurs="0"/>
+				<xs:element name="Variables" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Used to store additional variables to be passed through</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Variable" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="Name" type="xs:string"/>
+										<xs:element name="Value" type="xs:string"/>
+										<xs:element name="Unit" type="xs:string"/>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+					<xs:unique name="UniqueVariableName">
+						<xs:selector xpath="Variable"/>
+						<xs:field xpath="Name"/>
+					</xs:unique>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="EventMetaData">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="EventCode">
+					<xs:annotation>
+						<xs:documentation>Unique human readable code for the sample event. Often referred to a Layer ID</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="0"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="EventDate" type="xs:date">
+					<xs:annotation>
+						<xs:documentation>Date the sample event was collected in the field</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="EventType"/>
+				<xs:element name="EventExpirationDate" type="xs:date" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The date the data in the even is to expire for use in a recommendation</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Equation">
+		<xs:annotation>
+			<xs:documentation>Lab equation that is perminited to be used on this data set</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="Name" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Name of the equation</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Version" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Verison of the lab equation</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Default" type="xs:boolean" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Set if an equation is to be the default equation</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+			<xs:attribute name="ID" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>ID of the equation given by the lab</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FMISProfile">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Grower" minOccurs="0">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="ID" type="xs:string"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Farm" minOccurs="0">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="ID" type="xs:string"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Field" minOccurs="0">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="ID" type="xs:string"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Sub-Field" minOccurs="0">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="ID" type="xs:string"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SubmissionAttributes">
+		<xs:annotation>
+			<xs:documentation>Attributes that needed to be passed through for reference and recomdation.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="SubmittedBy" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Person submiting the sample</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SubmittedFor" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Person or company the sample is being submited for.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="SiteAttributes" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Attributes that are collected for the site the sample are collected from.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="RecommendationRequests" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Reference documntation for a lab recommendation</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Recommendation">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="Name" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Name for the recommendation</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Variables" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>List of the variables used in the recommendation</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Variable" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:all>
+										<xs:element name="Name" type="xs:string">
+											<xs:annotation>
+												<xs:documentation>Name of variable used in the recommendation</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Value" type="xs:string">
+											<xs:annotation>
+												<xs:documentation>Value of the variable used in the recommendation</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Unit" type="xs:string">
+											<xs:annotation>
+												<xs:documentation>Unit of the variable</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:all>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="Equation" minOccurs="0"/>
+				<xs:element name="DisplayOrder" type="xs:positiveInteger" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Order the FMIS should display the rec in.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ExpirationDate" type="xs:date" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The date the rec expires and should nolonger be used.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+			<xs:attribute name="RecID" type="xs:positiveInteger" use="required">
+				<xs:annotation>
+					<xs:documentation>Id to be referenced in the sample</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
