@@ -1,10 +1,7 @@
 
 | **Term**                    | **Description / Explanation**                                                                 | **Syntax, acceptable values**                                                                                   |
 |-------------------------|-------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
-| **Name**                | First and last name of person completing the form                                          |                                                                                                             |
-| **Email**               | Email address to contact with any questions or status updates for the submission           |                                                                                                             |
-| **Submitting Organization** | Organization requesting the submission                                                   |                                                                                                             |
-| **Rationale**           | A brief explanation of why the change is needed                                            |                                                                                                             |
+               |
 | **Matrix**              | The broad category of the substance being tested                                           | soil, water, manure, nematode, plant tissue, feed, …                                                        |
 | **Analyte**             | Elements, physical properties, or ratios that can be quantified or observed                | lower case unless element abbreviation                                                                      |
 | **Extraction Name**     | A commonly accepted name for the method, generally the extraction agent or named after the person that developed the method. |                                                                                                             |
