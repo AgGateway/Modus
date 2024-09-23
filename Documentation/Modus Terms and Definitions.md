@@ -1,7 +1,6 @@
 
 | **Term**                    | **Description / Explanation**                                                                 | **Syntax, acceptable values**                                                                                   |
 |-------------------------|-------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
-               |
 | **Matrix**              | The broad category of the substance being tested                                           | soil, water, manure, nematode, plant tissue, feed, …                                                        |
 | **Analyte**             | Elements, physical properties, or ratios that can be quantified or observed                | lower case unless element abbreviation                                                                      |
 | **Extraction Name**     | A commonly accepted name for the method, generally the extraction agent or named after the person that developed the method. |                                                                                                             |
